@@ -1,0 +1,8 @@
+[oneTBB]
+  url=git@github.com:oneapi-src/oneTBB.git
+  commit=539cbb3e67f8cde4b54c767626e015997755770b
+  branch=master
+[kahypar]
+  url=git@github.com:motis-project/kahypar.git
+  commit=cfbf001d4f2c2a88e19f0c9b149942ec5164add0
+  branch=master

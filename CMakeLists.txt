@@ -141,9 +141,9 @@ find_package(Threads REQUIRED)
 message(STATUS "Found Threads: ${CMAKE_THREAD_LIBS_INIT}")
 
 # Include Submodules
-add_subdirectory(external_tools/googletest EXCLUDE_FROM_ALL)
-include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
+#add_subdirectory(external_tools/googletest EXCLUDE_FROM_ALL)
+#include_directories(SYSTEM ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+#include_directories(SYSTEM ${gtest_SOURCE_DIR}/../googlemock/include ${gtest_SOURCE_DIR}/../googlemock/)
 include_directories(external_tools/kahypar)
 include_directories(external_tools/growt)
 include_directories(external_tools/WHFC)
@@ -194,32 +194,6 @@ if(KAHYPAR_DOWNLOAD_TBB)
       The build uses the TBB version installed on your system.")
   endif()
 endif()
-
-# Find TBB Library
-find_package(TBB REQUIRED)
-if (TBB_FOUND)
-  if ((TBB_INTERFACE_VERSION GREATER_EQUAL 12050) OR (NOT KAHYPAR_ENFORCE_MINIMUM_TBB_VERSION) OR KAHYPAR_CI_BUILD)
-    include_directories(SYSTEM ${TBB_INCLUDE_DIRS} ${TBB_MALLOC_INCLUDE_DIRS})
-    link_libraries(${TBB_LIBRARIES} ${TBB_MALLOC_LIBRARIES})
-    MESSAGE(STATUS "TBB Version: ${TBB_VERSION_MAJOR}.${TBB_VERSION_MINOR} (Interface Version=${TBB_INTERFACE_VERSION})")
-    MESSAGE(STATUS "Found TBB library: inc=${TBB_INCLUDE_DIRS}, lib=${TBB_LIBRARIES}")
-    MESSAGE(STATUS "Found TBB Malloc Proxy library: inc=${TBB_MALLOC_PROXY_INCLUDE_DIRS}, lib=${TBB_MALLOC_PROXY_LIBRARIES}")
-  ELSE ()
-    MESSAGE(FATAL_ERROR "
-      Your current TBB version is too old. Your interface version is ${TBB_INTERFACE_VERSION}, but the minimum
-      required version is 12050 (OneTBB 2021.5). You can download a suitable version by adding
-      -DKAHYPAR_DOWNLOAD_TBB=ON to the cmake build command (may require to clear the cmake cache).
-      Note that Mt-KaHyPar also compiles with older versions of TBB. However, we found some unexpected
-      behavior of a TBB function that causes on our side segmentation faults in really rare cases.
-      If you want to ignore these warnings, you can add -DKAHYPAR_ENFORCE_MINIMUM_TBB_VERSION=OFF to the
-      cmake build command which will build Mt-KaHyPar with your current TBB version.")
-  ENDIF()
-ELSE ()
-  MESSAGE(FATAL_ERROR "
-    TBB library not found. Install TBB on your system or
-    add -DKAHYPAR_DOWNLOAD_TBB=On to the cmake build command
-    (only available for Linux and MSVC).")
-ENDIF()
 
 # Find HWLOC Library
 FIND_PATH(HWLOCK_INCLUDE_DIR NAME hwloc.h
@@ -389,11 +363,11 @@ message(STATUS "CMAKE_CXX_FLAGS_RELWITHDEBINFO: ${CMAKE_CXX_FLAGS_RELWITHDEBINFO
 include(gmock)
 enable_testing()
 
-add_subdirectory(mt-kahypar/application)
-add_subdirectory(tools)
+#add_subdirectory(mt-kahypar/application)
+#add_subdirectory(tools)
 add_subdirectory(lib)
-add_subdirectory(tests)
-add_subdirectory(python)
+#add_subdirectory(tests)
+#add_subdirectory(python)
 
 # This adds the source files. It's important that this happens after the compile targets have been added
 add_subdirectory(mt-kahypar)
